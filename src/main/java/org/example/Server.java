@@ -85,7 +85,7 @@ public class Server extends JFrame {
         try (FileReader reader = new FileReader(PATHFORLOG)) {
             int ch;
             while ((ch = reader.read()) != -1) {
-                sb.append(ch);
+                sb.append((char) ch);
             }
             sb.delete(sb.length() - 1, sb.length());
             return sb.toString();

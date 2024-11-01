@@ -3,3 +3,5 @@ vasya: hi
 petya: nice2meet 
 petya: work 
 katya: hii 
+vasya: katya, whats up? 
+katya: fine 
