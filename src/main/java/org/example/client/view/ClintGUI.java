@@ -1,80 +1,68 @@
-package org.example;
+package org.example.client.view;
+
+import org.example.client.underTheHood.Client;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Client extends JFrame {
+public class ClintGUI extends JFrame implements ClientView {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 300;
+    private JTextArea log;
+    private JTextField tfIPAddress, tfPort, tfLogin, tfMessage;
+    private JPasswordField password;
+    private JButton btnLogin, btnSend;
+    private JPanel headerPanel;
+    private Client client;
 
-    private final Server server;
-    private boolean isConnected;
-    private String name;
-
-    JTextArea log;
-    JTextField tfIPAddress, tfPort, tfLogin, tfMessage;
-    JPasswordField password;
-    JButton btnLogin, btnSend;
-    JPanel headerPanel;
-
-    public Client(Server server) throws HeadlessException {
-        this.server = server;
-        setSize(WIDTH, HEIGHT);
-        setResizable(false);
-        setTitle("Chat");
-        setLocation(server.getX() - 500, server.getY());
+    public ClintGUI(){
+        setting();
         createPanel();
         setVisible(true);
     }
 
-
-    public void answer(String text) {
-        appendLog(text);
+    @Override
+    public void setClient(Client client) {
+        this.client = client;
+    }
+    private void setting(){
+        setSize(WIDTH, HEIGHT);
+        setResizable(false);
+        setTitle("Chat");
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
-    private void connectServer() {
-        if (server.connectUser(this)) {
-            appendLog("Успешное подключение\n");
+    @Override
+    public void showMessage(String text) {
+        log.append(text);
+    }
+
+    @Override
+    public void disconnectFromServer() {
+        hideHeaderPanel(true);
+    }
+    public void disconnectServer(){
+        client.disconnectServer();
+    }
+    public void hideHeaderPanel(boolean visible){
+        headerPanel.setVisible(visible);
+    }
+    public void login(){
+        if(client.connectToServer(tfLogin.getText())){
             headerPanel.setVisible(false);
-            isConnected = true;
-            name = tfLogin.getText();
-            String log = server.getLog();
-            if (!log.isEmpty()) {
-                appendLog(log);
-            }
-        } else appendLog("При подключении произошла ошибка");
-    }
 
-    public void disconnectServer() {
-        if (isConnected) {
-            headerPanel.setVisible(true);
-            isConnected = false;
-            server.disconnectUser(this);
-            appendLog("Успешное отключение. До новых встреч!");
         }
     }
-
-    public void message() {
-        if (isConnected) {
-            String text = tfMessage.getText();
-            if (!text.isEmpty()) {
-                server.message(name + ": " + text);
-                tfMessage.setText("");
-            }
-        } else appendLog("Отсутствует подключение");
+    private void message(){
+        client.message(tfMessage.getText());
+        tfMessage.setText("");
     }
-
-    private void appendLog(String text) {
-        log.append(text + "\n");
-    }
-
     private void createPanel() {
         add(createHeaderPanel(), BorderLayout.NORTH);
         add(createLog());
         add(creteFooter(), BorderLayout.SOUTH);
     }
-
     private Component createHeaderPanel() {
         headerPanel = new JPanel(new GridLayout(2, 3));
         tfIPAddress = new JTextField("127.0.0.1");
@@ -85,7 +73,7 @@ public class Client extends JFrame {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                connectServer();
+                login();
             }
         });
         headerPanel.add(tfIPAddress);
@@ -96,13 +84,11 @@ public class Client extends JFrame {
         headerPanel.add(btnLogin);
         return headerPanel;
     }
-
     private Component createLog() {
         log = new JTextArea();
         log.setEditable(false);
         return new JScrollPane(log);
     }
-
     private Component creteFooter() {
         JPanel panel = new JPanel(new BorderLayout());
         tfMessage = new JTextField();
@@ -125,7 +111,6 @@ public class Client extends JFrame {
         panel.add(btnSend,BorderLayout.EAST);
         return panel;
     }
-
     @Override
     protected void processWindowEvent(WindowEvent e) {
         if(e.getID() == WindowEvent.WINDOW_CLOSING) {
@@ -133,4 +118,8 @@ public class Client extends JFrame {
         }
         super.processWindowEvent(e);
     }
+
+
+
+
 }
