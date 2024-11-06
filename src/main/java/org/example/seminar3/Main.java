@@ -11,8 +11,10 @@ public class Main {
         Задача 2.
          */
         ArrayComparator arrayComparator = new ArrayComparator();
-        Integer[] array = {1, 2, 3};
-        String[] arr = {"1", "2", "3"};
-        System.out.println(arrayComparator.compareArrays(array, arr));
+        Integer[] array1 = {1, 2, 3};
+        String[] array2 = {"1", "2", "3"};
+        Integer[] array3 = {8, 11, 4};
+        System.out.println(arrayComparator.compareArrays(array1, array3)); // true
+        System.out.println(arrayComparator.compareArrays(array1, array2)); // false
     }
 }
