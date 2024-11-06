@@ -1,6 +1,6 @@
-package org.example.client.view;
+package org.example.seminar1_2.client.view;
 
-import org.example.client.underTheHood.Client;
+import org.example.seminar1_2.client.Client;
 
 public interface ClientView {
     void showMessage(String text);

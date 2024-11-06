@@ -1,7 +1,7 @@
-package org.example.client.underTheHood;
+package org.example.seminar1_2.client;
 
-import org.example.client.view.ClientView;
-import org.example.server.underTheHood.Server;
+import org.example.seminar1_2.client.view.ClientView;
+import org.example.seminar1_2.server.underTheHood.Server;
 
 public class Client {
 

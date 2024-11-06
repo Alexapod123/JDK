@@ -1,4 +1,4 @@
-package org.example.server.logging;
+package org.example.seminar1_2.server.logging;
 
 import java.io.FileReader;
 import java.io.FileWriter;

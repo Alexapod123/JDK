@@ -1,8 +1,8 @@
-package org.example.server.underTheHood;
+package org.example.seminar1_2.server.underTheHood;
 
-import org.example.client.underTheHood.Client;
-import org.example.server.logging.Repository;
-import org.example.server.view.ServerView;
+import org.example.seminar1_2.client.Client;
+import org.example.seminar1_2.server.logging.Repository;
+import org.example.seminar1_2.server.view.ServerView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package org.example.server.view;
+package org.example.seminar1_2.server.view;
 
-import org.example.server.underTheHood.Server;
+import org.example.seminar1_2.server.underTheHood.Server;
 
 public interface ServerView {
     void showMessage(String text);
